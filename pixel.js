@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function (){
 		isDrawing = false
 	})
 
+	document.getElementById('customInput').addEventListener("change", colorChange, false);
+
 	for (let i = 1; i <= canvasHeight; i++){ //make pixel canvas
 		for (let o = 1; o <= canvasWidth; o++){
 			canvasHTML += '<div class="pixel" id="pixel'+o+'x'+i+'"></div>'
@@ -46,5 +48,10 @@ document.addEventListener('DOMContentLoaded', function (){
 				pixels[items].style.backgroundColor = currentColor
 			}
 		})
+	}
+
+	function colorChange(event){
+		currentColor = event.target.value
+		document.getElementById('currentColor').style.backgroundColor = currentColor
 	}
 })

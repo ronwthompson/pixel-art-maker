@@ -43,6 +43,11 @@ body {
 	margin: 1px 5px 0 1px;
 }
 
+#custom-color {
+	text-align: center;
+	padding: 5px;
+}
+
 #currentChoice {
 	height: 105px;
 	width: 105px;
