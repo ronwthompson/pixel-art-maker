@@ -11,7 +11,8 @@ body {
 	height: 604px;
 	width: 904px;
 	border: 2px solid #000;
-	margin: 0 auto;
+	margin: 50px auto 0 auto;
+	border-radius: 3px;
 }
 
 .pixel {
@@ -26,27 +27,37 @@ body {
 #color-palette {
 	display: flex;
 	justify-content: center;
-	height: 100px;
-	width: 500px;
+	height: 56px;
+	width: 900px;
 	border: 2px solid #000;
-	margin: 0 auto;
+	margin: 10px auto 0px auto;
+	border-radius: 3px;
 }
 
 .palette {
 	display: inline-block;
 	border-radius: 50%;
-	height: 25px;
-	width: 25px;
+	height: 50px;
+	width: 50px;
 	border: 1px solid #BBB;
-	margin: 5px 5px 0 5px;
+	margin: 1px 5px 0 1px;
+}
+
+#currentChoice {
+	height: 105px;
+	width: 105px;
+	border: 2px solid #000;
+	margin: 10px auto 0px auto;
+	border-radius: 3px;
+	text-align: center;
+	padding: 5px;
 }
 
 #currentColor {
 	display: inline-block;
 	border-radius: 50%;
-	height: 25px;
-	width: 25px;
+	height: 75px;
+	width: 75px;
 	border: 2px solid #000;
-	margin: 5px 5px 0 5px;
 	background-color: #FFFFFF;
 }

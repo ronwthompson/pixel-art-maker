@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', function (){
 	let canvasHTML = ''
 	let colors = ['#FFFFFF','#C0C0C0','#808080','#000000','#FF0000','#800000','#FFFF00','#808000','#00FF00','#008000','#00FFFF','#008080','#0000FF','#000080','#FF00FF','#800080']
 	let colorsHTML = ''
+	let isDrawing = false
+
+	document.getElementById('pixel-canvas').addEventListener('mousedown',function(){
+		isDrawing = true
+	})
+
+	document.getElementById('pixel-canvas').addEventListener('mouseup',function(){
+		isDrawing = false
+	})
 
 	for (let i = 1; i <= canvasHeight; i++){ //make pixel canvas
 		for (let o = 1; o <= canvasWidth; o++){
@@ -23,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function (){
 		document.getElementById('color'+(i+1)).style.backgroundColor = colors[i]
 		document.getElementById('color'+(i+1)).addEventListener('click',function(){
 			currentColor = colors[i]
+			document.getElementById('currentColor').style.backgroundColor = colors[i]
 		})
 	}
 	
@@ -30,6 +40,11 @@ document.addEventListener('DOMContentLoaded', function (){
 	for (let items in pixels){
 		pixels[items].addEventListener('click',function(){
 			pixels[items].style.backgroundColor = currentColor
+		})
+		pixels[items].addEventListener('mouseenter',function(){
+			if (isDrawing){
+				pixels[items].style.backgroundColor = currentColor
+			}
 		})
 	}
 })
