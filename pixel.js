@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function (){
 	})
 
 	document.getElementById('customInput').addEventListener("change", colorChange, false);
+	document.getElementById('saveButton').addEventListener("click", saveData, false);
+	document.getElementById('loadButton').addEventListener("click", loadData, false);
 
 	for (let i = 1; i <= canvasHeight; i++){ //make pixel canvas
 		for (let o = 1; o <= canvasWidth; o++){
@@ -39,19 +41,39 @@ document.addEventListener('DOMContentLoaded', function (){
 	}
 	
 	let pixels = document.getElementsByClassName('pixel') //add listeners to pixels in canvas
-	for (let items in pixels){
-		pixels[items].addEventListener('click',function(){
-			pixels[items].style.backgroundColor = currentColor
+	for (let i = 0; i < pixels.length; i++){
+		pixels[i].style.backgroundColor = currentColor
+		pixels[i].addEventListener('click',function(){
+			pixels[i].style.backgroundColor = currentColor
 		})
-		pixels[items].addEventListener('mouseenter',function(){
+		pixels[i].addEventListener('mouseenter',function(){
 			if (isDrawing){
-				pixels[items].style.backgroundColor = currentColor
+				pixels[i].style.backgroundColor = currentColor
 			}
 		})
 	}
-
-	function colorChange(event){
-		currentColor = event.target.value
-		document.getElementById('currentColor').style.backgroundColor = currentColor
-	}
 })
+
+function colorChange(event){
+	currentColor = event.target.value
+	document.getElementById('currentColor').style.backgroundColor = currentColor
+}
+
+function saveData(){
+	let savePixels = document.getElementsByClassName('pixel')
+	let saveData = []
+	for (let i = 0; i < savePixels.length; i++){
+		saveData.push(savePixels[i].style.backgroundColor)
+	}
+	localStorage.setItem("painting", JSON.stringify(saveData))
+	alert("Your painting has been saved!")
+}
+
+function loadData(){
+	let loadData = JSON.parse(localStorage.getItem("painting"))
+	let loadPixels = document.getElementsByClassName('pixel')
+	for (let i = 0; i < loadData.length; i++){
+		loadPixels[i].style.backgroundColor = loadData[i]
+	}
+	alert("Your painting has been loaded!")
+}
