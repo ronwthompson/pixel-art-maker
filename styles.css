@@ -76,3 +76,7 @@ body {
 #save-load {
 	margin-top: 20px;
 }
+
+#custom-color p {
+	margin-top: 10px;
+}

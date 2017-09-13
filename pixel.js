@@ -1,4 +1,5 @@
 let currentColor = '#FFFFFF'
+let isFill = false
 
 document.addEventListener('DOMContentLoaded', function (){
 	let canvasWidth = 60
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function (){
 	document.getElementById('customInput').addEventListener("change", colorChange, false);
 	document.getElementById('saveButton').addEventListener("click", saveData, false);
 	document.getElementById('loadButton').addEventListener("click", loadData, false);
+	document.getElementById('toggleFill').addEventListener("click", fillToggle, false);
 
 	for (let i = 1; i <= canvasHeight; i++){ //make pixel canvas
 		for (let o = 1; o <= canvasWidth; o++){
@@ -44,7 +46,11 @@ document.addEventListener('DOMContentLoaded', function (){
 	for (let i = 0; i < pixels.length; i++){
 		pixels[i].style.backgroundColor = currentColor
 		pixels[i].addEventListener('click',function(){
-			pixels[i].style.backgroundColor = currentColor
+			if (isFill){
+				floodFill(pixels[i],pixels[i].style.backgroundColor,currentColor)
+			} else {
+				pixels[i].style.backgroundColor = currentColor
+			}
 		})
 		pixels[i].addEventListener('mouseenter',function(){
 			if (isDrawing){
@@ -76,4 +82,47 @@ function loadData(){
 		loadPixels[i].style.backgroundColor = loadData[i]
 	}
 	alert("Your painting has been loaded!")
+}
+
+function fillToggle(){
+	if (isFill) {
+		isFill = false
+		document.getElementById('fillDisplay').innerHTML = 'Off'
+	} else {
+		isFill = true
+		document.getElementById('fillDisplay').innerHTML = 'On'
+	}
+
+	if (isFill) {
+		document.getElementById('pixel-canvas').style.cursor = 'move'
+	} else {
+		document.getElementById('pixel-canvas').style.cursor = 'auto'
+	}
+}
+
+function floodFill(node, targetColor, replacementColor){
+	if (targetColor == replacementColor){
+		return
+	}
+	if (targetColor != node.style.backgroundColor){
+		return
+	}
+	node.style.backgroundColor = replacementColor
+	let nodeCoords = node.id.match(/(\d)+/g)
+	let nodeNorth = document.getElementById('pixel'+nodeCoords[0]+'x'+(parseInt(nodeCoords[1])+1))
+	let nodeEast = document.getElementById('pixel'+(parseInt(nodeCoords[0])+1)+'x'+nodeCoords[1])
+	let nodeSouth = document.getElementById('pixel'+nodeCoords[0]+'x'+(parseInt(nodeCoords[1])-1))
+	let nodeWest = document.getElementById('pixel'+(parseInt(nodeCoords[0])-1)+'x'+nodeCoords[1])
+	if (nodeCoords[1] < 40) {
+		floodFill(nodeNorth, targetColor, replacementColor)
+	}
+	if (nodeCoords[0] < 60) {
+		floodFill(nodeEast, targetColor, replacementColor)
+	}
+	if (nodeCoords[1] > 1) {
+		floodFill(nodeSouth, targetColor, replacementColor)
+	}
+	if (nodeCoords[0] > 1) {
+		floodFill(nodeWest, targetColor, replacementColor)
+	}
 }
